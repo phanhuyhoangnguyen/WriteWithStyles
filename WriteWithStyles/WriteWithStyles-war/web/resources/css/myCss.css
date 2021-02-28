@@ -1,0 +1,221 @@
+.vertical-align {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.banner-heading{
+    font-size: 2em;
+}
+
+img {
+    width: 100%;
+}
+
+a, a:hover{
+    color: black;
+    text-decoration: none;
+}
+
+/*--- Theme Styling ---*/
+
+header {
+    background-color: white;
+    border-bottom: 2px solid #0c2a6f;
+}
+
+.heading-with-hr {
+    width: 100%;
+    text-align: center;
+    border-bottom: 3px solid #0c2a6f;
+    line-height: 0.5em;
+    margin: 10px 0 20px;
+}
+
+footer {
+    border-top: 1px solid #0c2a6f;
+}
+
+footer strong {
+    color: #68C2E8;
+}
+
+.heading-with-hr span {
+    background: #fafafa;
+    padding: 1em;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.text-colour-white, .text-colour-white a{
+    color: white;
+}
+
+.text-colour-white a:hover{
+    color: black;
+}
+
+.max-width-80{
+    max-width: 80%;
+}
+/*-------------Effect Enhancement --------------*/
+
+.text-over-image-container {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-shadow: 1px 1px black;
+}
+
+a:hover.text-over-image-container{
+    color: white;
+}
+
+.text-over-image-centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text-over-image-container .text-over-image-left, .text-over-image-container .text-over-image-right{
+    position: absolute;
+    top: 40%;
+}
+
+.text-over-image-container .over-image-bottom-right{
+    position: absolute;
+    bottom: 5%;
+    right: 1%;   
+}
+
+.text-over-image-container .text-over-image-right {
+    right: 10%;
+}
+
+.text-over-image-container .text-over-image-left {
+    left: 10%;
+}
+
+.image-hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+    /* For IE8 and earlier */
+}
+
+.image-hover:hover {
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    /* For IE8 and earlier */
+    /*color: #101010;*/
+    transition: .3s ease;
+    transform: scale(1.02);
+}
+
+.display-4 {
+    color: #101010;
+}
+
+#login-container {
+    background-image: url("../images/login_banner.jpg");
+    background-size: cover;
+}
+
+.hover-style-footer li a {
+    color: #4d4d4d;
+    text-decoration: none;
+}
+
+.hover-style-footer li a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+#searchResult{
+    max-height: 10em;
+    overflow: auto;
+}
+
+/*--- Bootstrap Styling Modification ---*/
+
+.nav-item {
+    border-bottom: 2px solid transparent;
+}
+
+.nav-item.active-menu-item {
+    border-bottom: 2px solid #0c2a6f;
+}
+
+.navbar-nav li:hover {
+    border-bottom: 2px solid #0c2a6f;
+}
+
+.breadcrumb {
+    margin-top: 1em;
+    border-bottom: 1px solid #0c2a6f;
+}
+
+.theme-colour, .breadcrumb li a, .pagination .page-item button{
+    color: #68C2E8;
+}
+
+.page-item.active .page-link{
+    background-color: #68C2E8;
+    border-color: #68C2E8;
+}
+
+body,
+.breadcrumb {
+    background-color: #fafafa;
+}
+
+.btn.dropdown-btn{
+    width: 100%;
+    text-align: left;
+}
+
+.collapse .collapse-container{
+    padding: 1em 1em 0 1em;
+}
+
+.dropdown-toggle::after {
+    display:none
+}
+
+.float-right-bottom-btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.icon-medium {
+    font-size: 1.5em;
+}
+
+.icon-small {
+    font-size: 1em;
+}
+
+.icon-medium .badge {
+    font-size: 0.4em;
+}
+
+/* fix modal bugs anuglarUI with bootstrap 4 */
+.fade.in {
+    opacity: 1;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+       -o-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+
+.modal-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .5;
+}

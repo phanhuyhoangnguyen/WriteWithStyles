@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      >
+    <h:head>
+        <!-- Required meta tags -->
+        <title>WriteWithStyles | Australian's No 1 for Writing Instruments</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Web Descripiton" />
+        <meta name="keywords" content="Search Keyword" />
+        <meta name="author" content="Phan Huy Hoang Nguyen" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+              crossorigin="anonymous"/>
+
+        <!-- Fontawsome Plugins -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" 
+              integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+              crossorigin="anonymous"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/myCss.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <header class="sticky-top">
+            <nav class="navbar navbar-light navbar-expand-md">
+                <!-- Toggler/collapsibe Button -->
+                <button class="navbar-toggler order-1 order-lg-1" type="button" 
+                        data-toggle="collapse" data-target="#navbarToggler" 
+                        aria-controls="navbarToggler" aria-expanded="true" 
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Logo -->
+                <h:form>
+                    <h:link class="navbar-brand mr-lg-5 mr-0 order-2 order-lg-2" 
+                            outcome = "index">
+                        <h:graphicImage name="images/logo.png" 
+                                        class="img-responsive" alt="logo"/>
+                    </h:link>
+                </h:form>
+
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse order-4 order-lg-3 order-md-3" 
+                     id="navbarToggler">
+                    <ul class="navbar-nav mx-0 mx-lg-5 px-0 px-lg-5 justify-content-between" 
+                        style="flex-grow: 1;">
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "Home" 
+                                        outcome = "index" /> 
+                            </h:form>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "New Arrivals" 
+                                        outcome = "newArrivals" />
+                            </h:form>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "Fountain Pens" 
+                                        outcome = "fountainPens" /> 
+                            </h:form>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "Ballpoint Pens" 
+                                        outcome = "ballpointPens" /> 
+                            </h:form>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-lg-end mr-lg-4 mr-md-4 mr-0">
+                        <c:choose>
+                            <c:when test="#{empty request.remoteUser}">
+                                <h:form>
+                                    <h:link class="nav-link" outcome = "login">
+                                        <i class="fas fa-user icon-medium d-none d-md-block"></i>
+                                        <span class="d-block d-md-none">Sign In</span>
+                                    </h:link>
+                                </h:form>
+                            </c:when>
+                            <c:otherwise>
+                                <h:form>
+                                    <h:commandLink
+                                        action="#{userLoginManagedBean.logout}"
+                                        class="nav-link">
+                                        <i class="fas fa-sign-out-alt icon-medium d-none d-md-block"></i>
+                                        <span class="d-block d-md-none">Sign Out</span>
+                                    </h:commandLink>
+                                </h:form>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+                <div class="row mr-lg-4 mr-0 order-3 order-lg-4 order-md-4">
+                    <h:panelGroup id="searchBarOpenerPanelGroup" class="col">
+                        <h:form>
+                            <div class="clickable" data-toggle="collapse" 
+                                 data-target="#searchCollapse" aria-expanded="false" 
+                                 aria-controls="searchCollapse">
+                                <i class="fas fa-search icon-medium"></i>
+                            </div>
+                        </h:form>
+                    </h:panelGroup>
+                    <h:panelGroup id="shoppingCartNavBarPanelGroup" class="col">
+                        <h:form>
+                            <h:link outcome="viewShoppingCart">
+                                <i class="fas fa-shopping-cart icon-medium position-relative text-right">
+                                    <span class="badge badge-danger position-absolute pb-1 #{shoppingCartManagedBean.cart.size() == 0 ? 'd-none' : ''}">
+                                        #{shoppingCartManagedBean.cart.size()}
+                                    </span>
+                                </i>
+                            </h:link> 
+                        </h:form>
+                    </h:panelGroup>
+                </div>
+            </nav>
+
+            <div id="searchCollapse" class="collapse">
+                <div class=" w-50 mx-auto">
+                    <h:form id="searchProductForm" 
+                            class="form-inline justify-content-center py-2"> 
+                        <div class="input-group w-100 px-4 mb-2">
+                            <h:inputText id="searchProductField"
+                                         class="form-control" 
+                                         value="#{searchProductsManagedBean.searchValue}"
+                                         required="true"
+                                         requiredMessage="Please input value"
+                                         pt:placeholder="Search"
+                                         >
+                            </h:inputText>
+                            <h:message styleClass="invalid-tooltip d-block" 
+                                       for="searchProductField"/>
+                            <div class="align-items-center mx-md-2">
+                                <h:commandLink class="btn btn-outline-primary" 
+                                               action="#{searchProductsManagedBean.searchProduct}">
+                                    <i class="fas fa-search icon-medium"></i>
+                                    <f:ajax execute="@form" render="@form"/>
+                                </h:commandLink>
+                            </div>
+                            <div class="align-items-center">
+                                <div class="btn btn-outline-danger clickable" 
+                                     data-target="#searchCollapse" 
+                                     data-toggle="collapse">
+                                    <i class="fas fa-times icon-medium"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </header>
+
+        <!-- replaceable content -->
+        <ui:insert name="pageContent" >
+            <p>This is default content</p>
+        </ui:insert>
+
+        <!-- default footer -->
+        <footer class="container-fluid mt-4">
+            <div class="row container mx-auto mt-1 no-gutters">
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <strong>Write With Styles</strong>
+                    <ul class="list-unstyled hover-style-footer">
+                        <li>
+                            <a href="">About Us</a>
+                        </li>
+                        <li>
+                            <a href="">Contact</a>
+                        </li>
+                        <li>
+                            <a href="">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 hidden-xs col-md-4 col-lg-3">
+                    <strong>Shop</strong>
+                    <ul class="list-unstyled hover-style-footer">
+                        <li>
+                            <h:form>
+                                <h:link value = "New Arrivals" 
+                                        outcome = "newArrivals" /> 
+                            </h:form>
+                        </li>
+                        <li>
+                            <h:form>
+                                <h:link value = "Fountain Pens" 
+                                        outcome = "fountainPens" /> 
+                            </h:form>
+                        </li>
+                        <li>
+                            <h:form>
+                                <h:link value = "Ballpoint Pens" 
+                                        outcome = "ballpointPens" /> 
+                            </h:form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <strong>Help</strong>
+                    <ul class="list-unstyled hover-style-footer">
+                        <li>
+                            <a href="">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="">Shipping</a>
+                        </li>
+                        <li>
+                            <a href="">Returns</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-3 text-xs-left">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-12 text-md-left text-lg-right">
+                            Marketing Channels
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-12 text-md-left text-lg-right">
+                            Created by Phan H.H. Nguyen
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap: jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+        crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+        crossorigin="anonymous"></script>
+
+    </h:body>
+</html>

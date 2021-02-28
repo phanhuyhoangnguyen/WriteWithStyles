@@ -1,0 +1,276 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <!-- Required meta tags -->
+        <title>WriteWithStyles | Australian's No 1 for Writing Instruments</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Web Descripiton" />
+        <meta name="keywords" content="Search Keyword" />
+        <meta name="author" content="Phan Huy Hoang Nguyen" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+              crossorigin="anonymous"/>
+
+        <!-- Fontawsome Plugins -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" 
+              integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+              crossorigin="anonymous"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/myCss.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="resources/templates/commonHeaderFooter.xhtml">
+            <!-- this will be shown instead of the (default) “content” section in the “commonHeaderFooter.xhtml template -->
+            <ui:define name="pageContent">
+                <div class="container pt-2 w-75">
+                    <h:panelGroup id="bodyContainer">
+                        <h:panelGroup rendered="#{!memberRegisterationFormManagedBean.isSubmittedFormValid()}">
+                            <p class="text-center display-4 py-3 text-uppercase">Registration</p>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h:form class="needs-validation" 
+                                            id="userRegistationForm"
+                                            binding="#{memberRegisterationFormManagedBean.formComponent}">
+                                        <h:panelGroup class="row">
+                                            <h:panelGroup class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="fname" 
+                                                               value="First Name"/>
+                                                <h:inputText 
+                                                    id="fname" 
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.fname}"
+                                                    requiredMessage="Please input first name."
+                                                    required="true"/>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="fname"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="lname" 
+                                                               value="Last Name"/>
+                                                <h:inputText  
+                                                    id="lname"
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.lname}" 
+                                                    required="true"
+                                                    requiredMessage="Please input last name."/>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="lname"/>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup class="row">
+                                            <h:panelGroup class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="email" 
+                                                               value="Email"/>
+                                                <h:inputText 
+                                                    id="email" 
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.email}"
+                                                    validator="#{memberRegisterationFormManagedBean.validateIsEmailUnique}"
+                                                    required="true"
+                                                    requiredMessage="Please input email.">
+                                                    <f:validator validatorId = "emailFormatValidator" />
+                                                </h:inputText>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="email"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="mobile" 
+                                                               value="Mobile"/>
+                                                <h:inputText 
+                                                    id="mobile"
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.mobile}" 
+                                                    required="true"
+                                                    requiredMessage="Please input mobile number.">
+                                                    <f:validator validatorId = "mobileValidator" />
+                                                </h:inputText>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="mobile"/>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup class="row">
+                                            <h:panelGroup class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="password" 
+                                                               value="Password"/>
+                                                <h:inputSecret 
+                                                    id="password"
+                                                    binding="#{password}"
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.password}"
+                                                    required="true"
+                                                    requiredMessage="Please input password.">
+                                                    <f:validator validatorId="passwordValidator" />
+                                                </h:inputSecret>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="password"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="confirmPassword" 
+                                                               value="Confirm Password"/>
+                                                <h:inputSecret 
+                                                    id="confirmPassword"
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.confirmPassword}" 
+                                                    required="true"
+                                                    requiredMessage="Please input Confirm Password.">
+                                                    <f:attribute name="password" 
+                                                                 value="#{password}" />
+                                                    <f:validator validatorId="confirmPasswordValidator" />
+                                                </h:inputSecret>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="confirmPassword"/>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup class="row">
+                                            <div class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="address" 
+                                                               value="Address"/>
+                                                <h:inputText 
+                                                    id="address" 
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.address}"
+                                                    required="true"
+                                                    requiredMessage="Please input address."/>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="address"/>
+                                            </div>
+                                            <div class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="suburb" 
+                                                               value="Suburb"/>
+                                                <h:inputText 
+                                                    id="suburb" 
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.suburb}"
+                                                    required="true"
+                                                    requiredMessage="Please input suburb."/>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="suburb"/>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup class="row">
+                                            <div class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="postCode" 
+                                                               value="Post Code"/>
+                                                <h:inputText 
+                                                    id="postCode" 
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.postCode}"
+                                                    required="true"
+                                                    requiredMessage="Please input post code.">
+                                                    <f:validator validatorId = "postCodeValidator" />
+                                                </h:inputText>
+                                                <h:message styleClass="form-text text-danger" 
+                                                           for="postCode"/>
+                                            </div>
+                                            <div class="form-group col-md-6 col-lg-12">
+                                                <h:outputLabel for="state" 
+                                                               value="State"/>
+                                                <h:selectOneMenu 
+                                                    id="state"
+                                                    class="form-control" 
+                                                    value="#{memberRegisterationFormManagedBean.state}">                     
+                                                    <f:selectItems value="#{memberRegisterationFormManagedBean.availableStates}" 
+                                                                   var="item" 
+                                                                   itemLabel="#{item}" 
+                                                                   itemValue="#{item}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup class="row">
+                                            <h:panelGroup class="col-lg-12">
+                                                <span class="text-info clickable" 
+                                                      data-toggle="collapse" 
+                                                      data-target="#termsAndCondition">*Terms and Condition</span>
+                                                <div id="termsAndCondition" 
+                                                     class="collapse form-group col-lg-12">
+                                                    Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample
+                                                    Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text
+                                                    Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample
+                                                    Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text
+                                                    Sample Text
+                                                </div>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                        <h:panelGroup class="row mt-3">
+                                            <h:panelGroup class="col-md-6 my-1">
+                                                <h:commandButton action="#{memberRegisterationFormManagedBean.submit}" 
+                                                                 value ="SUBMIT" 
+                                                                 class="btn btn-info text-white mr-lg-2" >
+                                                    <f:ajax execute="@form" 
+                                                            render="@form :bodyContainer :errorMessage" />
+                                                </h:commandButton>
+                                            </h:panelGroup>
+                                            <h:panelGroup class="col-md-6 my-1">
+                                                <h:button 
+                                                    value="CLEAR"
+                                                    class="btn btn-danger">
+                                                </h:button>
+                                            </h:panelGroup>
+                                        </h:panelGroup>
+                                    </h:form>
+                                    <h:message id="errorMessage" 
+                                               styleClass="form-text text-danger" 
+                                               for="userRegistationForm"/>
+                                </div>
+
+                                <h:panelGroup class="col-lg-6">
+                                    <div class="row">
+                                        <!-- Aside section with company info -->
+                                        <aside class="col-md-6 col-lg-12">
+                                            <address>
+                                                <p>
+                                                    <strong>Write With Styles Shop</strong>
+                                                    <br/> Visit us at:
+                                                    <br/> Room 301, Level 3, 125 Bourke St. Melbourne 3000.
+                                                    <br/> (03) 5317 8198
+                                                    <br/>
+                                                    <a href="mailto:hoang.nguyen.swi@gmail.com">info@writewithstyles.com.au</a>
+                                                    <br/>
+                                                </p>
+                                                <p>
+                                                    <strong>Trading Hours</strong>
+                                                    Monday - Friday: 9am - 7pm
+                                                    <br/> Saturday - Sunday: 10am - 5pm
+                                                </p>
+                                            </address>
+                                        </aside>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{memberRegisterationFormManagedBean.isSubmittedFormValid()}">
+                            <ui:include src="resources/templates/message.xhtml">
+                                <ui:param name="messageHeading" 
+                                          value="#{memberRegisterationFormManagedBean.formOutputMessageHeading}" />
+                                <ui:param name="messageBody" 
+                                          value="#{memberRegisterationFormManagedBean.formOutputMessageBody}" />
+                            </ui:include>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+        <!-- Bootstrap: jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+        crossorigin="anonymous"></script>
+        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+        crossorigin="anonymous"></script>
+
+    </h:body>
+</html>

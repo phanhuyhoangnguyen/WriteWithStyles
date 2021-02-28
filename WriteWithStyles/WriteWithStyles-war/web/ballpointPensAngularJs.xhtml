@@ -1,0 +1,392 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      >
+    <f:metadata>
+        <f:attribute name="pageName" value="Ballpoint Pens" />
+    </f:metadata>
+    <h:head>
+        <!-- Required meta tags -->
+        <title>WriteWithStyles | Australian's No 1 for Writing Instruments</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Web Descripiton" />
+        <meta name="keywords" content="Search Keyword" />
+        <meta name="author" content="Phan Huy Hoang Nguyen" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+
+        <!-- Fontawsome Plugins -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+              crossorigin="anonymous"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/myCss.css" rel="stylesheet"/>
+
+        <script type="text/javascript" language="javascript">
+            var availableProducts;
+            document.addEventListener('DOMContentLoaded', function () {
+            availableProducts = #{dynamicProductsDisplayForPageManagedBean.productsAsJson};
+            }, false);
+        </script>
+    </h:head>
+    <h:body>
+        <header class="sticky-top">
+            <nav class="navbar navbar-light navbar-expand-md">
+                <!-- Toggler/collapsibe Button -->
+                <button class="navbar-toggler order-1 order-lg-1" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler"
+                        aria-expanded="true" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Brand -->
+                <h:form>
+                    <h:link class="navbar-brand mr-lg-5 mr-0 order-2 order-lg-2" value = "" outcome = "index">
+                        <h:graphicImage name="images/logo.png" class="img-responsive" alt="logo"/>
+                    </h:link>
+                </h:form>
+
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse order-4 order-lg-3 order-md-3" id="navbarToggler">
+                    <ul class="navbar-nav mx-0 mx-lg-5 px-0 px-lg-5 justify-content-between" style="flex-grow: 1;">
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "Home" outcome = "index" /> 
+                            </h:form>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "New Arrivals" outcome = "newArrivals" />
+                            </h:form>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "Fountain Pens" outcome = "fountainPens" /> 
+                            </h:form>
+                        </li>
+                        <li class="nav-item">
+                            <h:form>
+                                <h:link class="nav-link" value = "Ballpoint Pens" outcome = "ballpointPens" /> 
+                            </h:form>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-lg-end mr-lg-4 mr-md-4 mr-0">
+                        <h:form rendered="#{empty request.remoteUser}">
+                            <h:link class="nav-link" outcome = "login">
+                                <i class="fas fa-user icon-medium d-none d-md-block"></i>
+                                <span class="d-block d-md-none">Sign In</span>
+                            </h:link>
+                        </h:form>
+                        <h:form rendered="#{not empty request.remoteUser}">
+                            <h:commandLink 
+                                action="#{userLoginManagedBean.logout}"
+                                class="nav-link">
+                                <i class="fas fa-sign-out-alt icon-medium d-none d-md-block"></i>
+                                <span class="d-block d-md-none">Sign Out</span>
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+                <div class="row mr-lg-4 mr-0 order-3 order-lg-4 order-md-4">
+                    <h:panelGroup id="searchBarOpenerPanelGroup" class="col">
+                        <h:form>
+                            <div class="clickable"
+                                 data-toggle="collapse" 
+                                 data-target="#searchCollapse" 
+                                 aria-expanded="false" 
+                                 aria-controls="searchCollapse">
+                                <i class="fas fa-search icon-medium"></i>
+                            </div>
+                        </h:form>
+                    </h:panelGroup>
+                    <h:panelGroup id="shoppingCartNavBarPanelGroup" class="col">
+                        <h:form>
+                            <h:link outcome="viewShoppingCart">
+                                <i class="fas fa-shopping-cart icon-medium position-relative text-right">
+                                    <span class="badge badge-danger position-absolute pb-1 #{shoppingCartManagedBean.cart.size() == 0 ? 'd-none' : ''}">
+                                        #{shoppingCartManagedBean.cart.size()}
+                                    </span>
+                                </i>
+                            </h:link> 
+                        </h:form>
+                    </h:panelGroup>
+                </div>
+            </nav>
+
+            <div id="searchCollapse" class="collapse">
+                <div class=" w-50 mx-auto">
+                    <h:form id="searchProductForm" class="form-inline justify-content-center py-2"> 
+                        <div class="input-group w-100 px-4 mb-2">
+                            <h:inputText class="form-control" 
+                                         pt:placeholder="Search"
+                                         id="searchProductField" 
+                                         value="#{searchProductsManagedBean.searchValue}"
+                                         requiredMessage="Please input value"
+                                         size="6"
+                                         required="true">
+                            </h:inputText>
+                            <h:message styleClass="invalid-tooltip d-block" for="searchProductField"/>
+                            <div class="align-items-center mx-md-2">
+                                <h:commandLink class="btn btn-outline-primary" action="#{searchProductsManagedBean.searchProduct}">
+                                    <i class="fas fa-search icon-medium"></i>
+                                    <f:ajax execute="@form" render=":searchProductForm"/>
+                                </h:commandLink>
+                            </div>
+                            <div class="align-items-center">
+                                <div class="btn btn-outline-danger clickable" 
+                                     data-target="#searchCollapse" 
+                                     data-toggle="collapse">
+                                    <i class="fas fa-times icon-medium"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </header>
+
+        <div ng-app="myApp" ng-controller="pageCtrl">
+            <h:panelGroup rendered ="#{!dynamicProductsDisplayForPageManagedBean.pageBanner.isEmpty()}">
+                <div class="text-left text-over-image-container">
+                    <span class="text-over-image-left banner-heading">#{dynamicProductsDisplayForPageManagedBean.pageName}</span>
+                    <h:graphicImage name="images/#{dynamicProductsDisplayForPageManagedBean.pageBanner}" class="img-responsive" alt="Banner Wallpaper"/>
+                </div>
+            </h:panelGroup>
+
+            <div id="body-container" class="container">
+                <ui:insert name="breadcrumb" >
+                    <h:panelGroup id="breadcrumbPanelGroup">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <h:form>
+                                        <h:link value = "Home" outcome = "index" /> 
+                                    </h:form>
+                                </li>
+                                <li class="breadcrumb-item" aria-current="page">
+                                    #{dynamicProductsDisplayForPageManagedBean.pageName}
+                                </li>
+                            </ol>
+                        </nav>
+                    </h:panelGroup>
+                </ui:insert>
+
+                <div id="productsContainer" class="clearfix">
+                    <form class="form-inline float-sm-left">
+                        <div class="form-group">
+                            <label for="sortBy">Sort By:</label>
+                            <select class="form-control ml-2" ng-model="selectedSort">
+                                <option ng-repeat="(key, value) in sortByAvailableObj" value="{{value}}">{{key}}</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <div class="btn btn-outline-info float-sm-right" data-toggle="collapse" data-target="#collapsibleFilter">
+                        Filter
+                        <i class="fa fa-caret-down"></i>
+                    </div>
+                </div>
+
+                <div id="collapsibleFilter" class="collapse">
+                    <div class="row my-4 pr-lg-2">
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <div data-toggle="collapse" data-target="#brandFilter" class="btn btn-outline-primary dropdown-btn" role="button">
+                                <span>Brand</span>
+                            </div>
+                            <div id="brandFilter" class="collapse show">
+                                <div class="collapse-container">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6" ng-repeat="brand in availableBrands">
+                                            <div class="form-check">
+                                                <input id="{{brand}}" 
+                                                       type="checkbox" 
+                                                       class="form-check-input clickable" 
+                                                       ng-checked="exists(brand, brandsSelectedArray)"
+                                                       ng-click="toggle(brand, brandsSelectedArray)" />
+                                                <label for="{{brand}}" class="form-check-label clickable text-capitalize">{{brand}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <div data-toggle="collapse" data-target="#priceFilter" 
+                                 class="btn btn-outline-primary dropdown-btn" role="button">
+                                Price
+                            </div>
+                            <div id="priceFilter" class="collapse show">
+                                <div class="collapse-container">
+                                    <div class="form-group row">
+                                        <label for="minPrice" class="col-form-label col-sm-2">Min</label>
+                                        <div class="col-sm-10">
+                                            <input id="minPrice" type="number" ng-model="minPrice" 
+                                                class="form-control" placeholder="Min"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="maxPrice" class="col-sm-2 col-form-label">Max</label>
+                                        <div class="col-sm-10">
+                                            <input id="maxPrice" ng-model="maxPrice" type="number"
+                                                   class="form-control" placeholder="Max"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <div data-toggle="collapse" data-target="#colourFilter" 
+                                 class="btn btn-outline-primary dropdown-btn" 
+                                 role="button">
+                                Colour
+                            </div>
+                            <div id="colourFilter" class="collapse show">
+                                <div class="collapse-container">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6" ng-repeat="colour in availableColours">
+                                            <div class="form-check">
+                                                <input id="{{colour}}" type="checkbox" 
+                                                       class="form-check-input clickable" 
+                                                       ng-checked="exists(colour, coloursSelectedArray)"
+                                                       ng-click="toggle(colour, coloursSelectedArray)" />
+                                                <label for="{{colour}}" 
+                                                       class="form-check-label clickable text-capitalize">
+                                                    {{colour}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-3 pr-md-4">
+                            <div class="form-group row">
+                                <button type="button" ng-click="clearFilters()" class="btn btn-outline-danger ml-auto">
+                                    Clear X
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h:panelGroup class="row my-2" id="productsDisplayPanelGroup">
+                    <a href="viewProduct.xhtml?productId={{item.$id}}" class="col-sm-6 col-md-3 image-hover mb-4" ng-repeat="item in products
+                                | checkboxFilter:brandsSelectedArray:'brand':this 
+                                        | rangeFilter:minPrice:maxPrice:this                                                            
+                                        | checkboxFilter:coloursSelectedArray:'colour':this
+                                        | orderBy:selectedSort
+                                        | offset:(currentPaginationPageIndex - 1) * productsPerPaginationPage
+                                        | limitTo:productsPerPaginationPage">
+                        
+                        <img ng-src="resources/{{item.image}}" class="img-responsive" alt="image"/>
+                        <div class="row">
+                            <span class="col-6">
+                                {{item.brand}} - {{item.name}}
+                            </span>
+                            <span class="col-6 text-right">
+                                $AUD {{item.price}}
+                            </span>
+                        </div>
+                    </a>
+                </h:panelGroup>
+
+                <h:panelGroup id="paginationPanelGroup">
+                    <nav aria-label="Page navigation" ng-show="displayedProducts.length > productsPerPaginationPage">
+                        <ul ng-show="!(products === null || products.length &lt; 0)" class="pagination justify-content-end pt-3">
+                            <li class="page-item" data-ng-class="prevPageDisabled()" data-ng-click="prevPage()">
+                                <button type="button" class="page-link">Previous</button>
+                            </li>
+                            <!-- Page Range Navigation, {} return boolean value based on Expression-->
+                            <li data-ng-repeat="n in range()" class="page-item " data-ng-class="{active: n === currentPaginationPageIndex}" data-ng-click="setPage(n)">
+                                <button type="button" class="page-link">{{n}}</button>
+                            </li>
+                            <li class="page-item" data-ng-class="nextPageDisabled()" data-ng-click="nextPage()">
+                                <button type="button" class="page-link">Next</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </h:panelGroup>
+            </div>
+        </div>
+
+        <!-- default footer -->
+        <footer class="container-fluid mt-4">
+            <div class="row container mx-auto mt-1 no-gutters">
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <strong>Write With Styles</strong>
+                    <ul class="list-unstyled hover-style-footer">
+                        <li>
+                            <a href="">About Us</a>
+                        </li>
+                        <li>
+                            <a href="">Contact</a>
+                        </li>
+                        <li>
+                            <a href="">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 hidden-xs col-md-4 col-lg-3">
+                    <strong>Shop</strong>
+                    <ul class="list-unstyled hover-style-footer">
+                        <li>
+                            <h:form>
+                                <h:link value = "New Arrivals" outcome = "newArrivals" /> 
+                            </h:form>
+                        </li>
+                        <li>
+                            <h:form>
+                                <h:link value = "Fountain Pens" outcome = "fountainPens" /> 
+                            </h:form>
+                        </li>
+                        <li>
+                            <h:form>
+                                <h:link value = "Ballpoint Pens" outcome = "ballpointPens" /> 
+                            </h:form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-3">
+                    <strong>Help</strong>
+                    <ul class="list-unstyled hover-style-footer">
+                        <li>
+                            <a href="">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="">Shipping</a>
+                        </li>
+                        <li>
+                            <a href="">Returns</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-3 text-xs-left">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-12 text-md-left text-lg-right">
+                            Marketing Channels
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-12 text-md-left text-lg-right">
+                            Created by Phan H.H. Nguyen
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap: jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+        <!-- Basic AngularJS -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+
+        <!-- My Custom Js -->
+        <script src="resources/js/myAngularJs.js"></script>
+    </h:body>
+</html>

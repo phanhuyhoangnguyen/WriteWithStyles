@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <!-- Required meta tags -->
+        <title>WriteWithStyles | Australian's No 1 for Writing Instruments</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Web Descripiton" />
+        <meta name="keywords" content="Search Keyword" />
+        <meta name="author" content="Phan Huy Hoang Nguyen" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+              crossorigin="anonymous"/>
+
+        <!-- Fontawsome Plugins -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" 
+              integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+              crossorigin="anonymous"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/myCss.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="resources/templates/commonHeaderFooter.xhtml">
+            <!-- this will be shown instead of the (default) “content” section in the “commonHeaderFooter.xhtml template -->
+            <ui:define name="pageContent">
+                <div id="login-container" class="container-fluid">
+                    <c:if test='${not empty param["Retry"]}'>
+                        <div class="d-flex justify-content-center">
+                            <div class="alert alert-warning alert-dismissible fade show position-fixed" 
+                                 role="alert">
+                                Your email or password is incorrect.
+                                <button type="button" class="close" 
+                                        data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </c:if>
+                    <div class="py-5 clearfix">
+                        <h:form class="pr-5 float-right align-items-center text-colour-white" 
+                                id="login" 
+                                onsubmit="document.getElementById('login').action = 'j_security_check';" 
+                                prependId="false">
+                            <h:panelGroup class="form-group">
+                                <h4>LOGIN</h4>
+                                <div class="form-group">
+                                    <h:outputLabel for="j_username" value="Email"/>
+                                    <h:inputText id="j_username" size="20" 
+                                                 class="form-control"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <h:outputLabel for="j_password" value="Password"/>
+                                    <h:inputSecret id="j_password" size="20" 
+                                                   class="form-control"/>                                       
+                                </div>
+                                <div>
+                                    <h:commandButton class="btn btn-primary" 
+                                                     value="Login"/>
+                                    &nbsp;
+                                </div>
+                                <span >Forgot Your Password?</span>
+                                <p class="pt-2">
+                                    <h:link value = "NOT A MEMBER? SIGN UP NOW" 
+                                            outcome = "register" /> 
+                                </p>                                
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+        <!-- Bootstrap: jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+        crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+        crossorigin="anonymous"></script>
+        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+        crossorigin="anonymous"></script>
+
+    </h:body>
+</html>

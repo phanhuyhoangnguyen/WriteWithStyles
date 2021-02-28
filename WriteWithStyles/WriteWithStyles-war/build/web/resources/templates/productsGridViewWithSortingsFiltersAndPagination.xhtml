@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <!-- Required meta tags -->
+        <title>WriteWithStyles | Australian's No 1 for Writing Instruments</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Web Descripiton" />
+        <meta name="keywords" content="Search Keyword" />
+        <meta name="author" content="Phan Huy Hoang Nguyen" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+              crossorigin="anonymous"/>
+
+        <!-- Fontawsome Plugins -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" 
+              integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+              crossorigin="anonymous"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/myCss.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="commonHeaderFooter.xhtml">
+            <!-- this will be shown instead of the (default) “content” section in the “commonHeaderFooter.xhtml template -->
+            <ui:define name="pageContent">
+                <!-- replaceable content -->
+                <h:panelGroup rendered ="#{!dynamicProductsDisplayForPageManagedBean.pageBanner.isEmpty()}">
+                    <div class="text-left text-over-image-container">
+                        <span class="text-over-image-left banner-heading">
+                            #{dynamicProductsDisplayForPageManagedBean.pageName}
+                        </span>
+                        <h:graphicImage name="images/#{dynamicProductsDisplayForPageManagedBean.pageBanner}" 
+                                        class="img-responsive" alt="Banner Wallpaper"/>
+                    </div>
+                </h:panelGroup>
+
+                <div id="body-container" class="container">
+                    <ui:insert name="breadcrumb" >
+                        <h:panelGroup id="breadcrumbPanelGroup">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <h:form>
+                                            <h:link value = "Home" outcome = "index" /> 
+                                        </h:form>
+                                    </li>
+                                    <li class="breadcrumb-item" aria-current="page">
+                                        #{dynamicProductsDisplayForPageManagedBean.pageName}
+                                    </li>
+                                </ol>
+                            </nav>
+                        </h:panelGroup>
+                    </ui:insert>
+
+                    <div id="productsContainer" class="clearfix">
+                        <h:form class="form-inline float-sm-left">
+                            <div class="form-group">
+                                <h:outputLabel value="Sort By:"/>
+                                <h:selectOneMenu 
+                                    id="selectedSort"
+                                    class="form-control ml-2"
+                                    value="#{dynamicProductsDisplayForPageManagedBean.selectedSortingOption}"
+                                    >                     
+                                    <f:selectItems value="#{dynamicProductsDisplayForPageManagedBean.availableSortingOptions}" 
+                                                   var="sortingOption" 
+                                                   itemLabel="#{sortingOption}" 
+                                                   itemValue="#{sortingOption}" />
+                                    <f:ajax listener="#{dynamicProductsDisplayForPageManagedBean.sortProduct}" 
+                                            render=":productsDisplayPanelGroup" />
+                                </h:selectOneMenu>
+                            </div>
+                        </h:form>
+
+                        <div class="btn btn-outline-primary float-sm-right" 
+                             data-toggle="collapse" data-target="#collapsibleFilter">
+                            Filter
+                            <i class="fa fa-caret-down"></i>
+                        </div>
+                    </div>
+
+                    <div id="collapsibleFilter" class="collapse">
+                        <h:panelGroup id="filterPanelGroup">
+                            <div class="row my-4 pr-lg-2">
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div data-toggle="collapse" data-target="#brandFilter" 
+                                         class="btn btn-outline-primary dropdown-btn">
+                                        <span>Brand</span>
+                                    </div>
+                                    <div id="brandFilter" class="collapse show">
+                                        <div class="collapse-container">
+                                            <div class="form-group row">
+                                                <ui:repeat var="item" value="#{dynamicProductsDisplayForPageManagedBean.availableBrands}">
+                                                    <h:form class="col-sm-6">
+                                                        <div class="form-check">
+                                                            <h:selectBooleanCheckbox 
+                                                                class="form-check-input clickable" 
+                                                                value="#{dynamicProductsDisplayForPageManagedBean.selectedBrandsForFilters[item]}"
+                                                                >
+                                                                <f:ajax event="click" 
+                                                                        listener="#{dynamicProductsDisplayForPageManagedBean.filterProducts}" 
+                                                                        render="@form :productsDisplayPanelGroup :paginationPanelGroup" />
+                                                            </h:selectBooleanCheckbox>
+                                                            <h:outputLabel class="form-check-label clickable text-capitalize" value="#{item}"/>
+                                                        </div>
+                                                    </h:form>
+                                                </ui:repeat>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div data-toggle="collapse" data-target="#priceFilter" 
+                                         class="btn btn-outline-primary dropdown-btn" 
+                                         role="button">Price</div>
+                                    <div id="priceFilter" class="collapse show">
+                                        <div class="collapse-container">
+                                            <h:form class="form-group row"> 
+                                                <h:outputLabel class="col-form-label col-sm-2" value="Min"/>
+                                                <h:panelGroup class="col-sm-10">
+                                                    <h:inputText id="minPrice" class="form-control"
+                                                                 value="#{dynamicProductsDisplayForPageManagedBean.minPrice}"
+                                                                 converterMessage="Please enter digits only.">
+                                                        <f:ajax listener="#{dynamicProductsDisplayForPageManagedBean.filterProducts}" 
+                                                                render="@form :productsDisplayPanelGroup :paginationPanelGroup" />
+                                                    </h:inputText>
+                                                    <h:message styleClass="invalid-tooltip d-block position-static" for="minPrice"/>
+                                                </h:panelGroup>
+                                            </h:form>
+                                            <h:form class="form-group row"> 
+                                                <h:outputLabel class="col-form-label col-sm-2" value="Max"/>
+                                                <h:panelGroup class="col-sm-10">
+                                                    <h:inputText id="maxPrice" 
+                                                                 value="#{dynamicProductsDisplayForPageManagedBean.maxPrice}"
+                                                                 class="form-control"
+                                                                 converterMessage="Please enter digits only.">
+                                                        <f:ajax listener="#{dynamicProductsDisplayForPageManagedBean.filterProducts}" 
+                                                                render="@form :productsDisplayPanelGroup :paginationPanelGroup" />
+                                                    </h:inputText>
+                                                    <h:message styleClass="invalid-tooltip d-block position-static" for="maxPrice"/>
+                                                </h:panelGroup>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div data-toggle="collapse" data-target="#colourFilter" 
+                                         class="btn btn-outline-primary dropdown-btn" 
+                                         role="button">Colour</div>
+                                    <div id="colourFilter" class="collapse show">
+                                        <div class="collapse-container">
+                                            <div class="form-group row">
+                                                <ui:repeat var="item" value="#{dynamicProductsDisplayForPageManagedBean.availableColours}">
+                                                    <h:form class="col-sm-6">
+                                                        <div class="form-check">
+                                                            <h:selectBooleanCheckbox 
+                                                                class="form-check-input clickable" 
+                                                                value="#{dynamicProductsDisplayForPageManagedBean.selectedColoursForFilters[item]}"
+                                                                >
+                                                                <f:ajax event="click" listener="#{dynamicProductsDisplayForPageManagedBean.filterProducts}" 
+                                                                        render="@form :productsDisplayPanelGroup :paginationPanelGroup" />
+                                                            </h:selectBooleanCheckbox>
+                                                            <h:outputLabel class="form-check-label clickable text-capitalize" value="#{item}"/>
+                                                        </div>
+                                                    </h:form>
+                                                </ui:repeat>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3 pr-md-4">
+                                    <h:form class="form-group row">
+                                        <h:commandButton action="#{dynamicProductsDisplayForPageManagedBean.clearFilters}" 
+                                                         value ="Clear X" class="btn btn-outline-danger ml-auto">
+                                            <f:ajax render=":filterPanelGroup :productsDisplayPanelGroup :paginationPanelGroup" />
+                                        </h:commandButton>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </div>
+
+                    <h:panelGroup class="row my-2" id="productsDisplayPanelGroup">
+                        <ui:repeat var="item" value="#{dynamicProductsDisplayForPageManagedBean.availableProductsUnderFilterAndCurrentPaginationPage}">
+                            <h:link class="col-sm-6 col-md-3 image-hover mb-4" outcome="viewProduct">
+                                <h:graphicImage class="img-responsive" name="#{item.image}" alt="Product Image"/>
+                                <div class="row">
+                                    <span class="col-6">
+                                        #{item.displayName}
+                                    </span>
+                                    <span class="col-6 text-right">
+                                        $AUD #{item.price}
+                                    </span>
+                                </div>
+                                <f:param name="productId" value="#{item.id}" />
+                            </h:link>
+                        </ui:repeat>
+                    </h:panelGroup>
+                    <h:panelGroup id="paginationPanelGroup">
+                        <h:panelGroup rendered ="#{dynamicProductsDisplayForPageManagedBean.availableProductsUnderFilter.size() gt dynamicProductsDisplayForPageManagedBean.productsPerPaginationPage}">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-end pt-3">
+                                    <li class="page-item #{dynamicProductsDisplayForPageManagedBean.currentPaginationPageIndex == 1 ? 'disabled' : ''}">
+                                        <h:form>
+                                            <h:commandLink 
+                                                class="page-link" 
+                                                action="#{dynamicProductsDisplayForPageManagedBean.prevPaginationPage}" 
+                                                value="Previous">
+                                                <f:ajax event="action" render=":paginationPanelGroup :productsDisplayPanelGroup" />
+                                            </h:commandLink>
+                                        </h:form>
+                                    </li>
+                                    <ui:repeat var="item" value="#{dynamicProductsDisplayForPageManagedBean.calculatePaginationPageRange()}">
+                                        <li class="page-item #{dynamicProductsDisplayForPageManagedBean.currentPaginationPageIndex == item ? 'active' : ''}"> 
+                                            <h:form>
+                                                <h:commandLink 
+                                                    class="page-link "
+                                                    action="#{dynamicProductsDisplayForPageManagedBean.navigtateToPaginationPage(item)}" 
+                                                    value="#{item}">
+                                                    <f:ajax event="action" render=":paginationPanelGroup :productsDisplayPanelGroup" />
+                                                </h:commandLink>   
+                                            </h:form>
+                                        </li>
+                                    </ui:repeat>
+                                    <li class="page-item #{dynamicProductsDisplayForPageManagedBean.currentPaginationPageIndex == dynamicProductsDisplayForPageManagedBean.paginationPagesCount ? 'disabled' : ''}" >
+                                        <h:form>
+                                            <h:commandLink 
+                                                class="page-link" 
+                                                action="#{dynamicProductsDisplayForPageManagedBean.nextPaginationPage}" value="Next">
+                                                <f:ajax event="action" render=":paginationPanelGroup :productsDisplayPanelGroup" />
+                                            </h:commandLink>
+                                        </h:form>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+        <!-- Bootstrap: jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+        crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+        crossorigin="anonymous"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+        crossorigin="anonymous"></script>
+    </h:body>
+</html>

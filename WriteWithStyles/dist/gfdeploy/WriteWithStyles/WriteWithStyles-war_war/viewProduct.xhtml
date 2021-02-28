@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      >
+    <f:metadata>
+        <f:viewParam name="productId" value="#{viewProductManagedBean.productId}" />
+        <f:viewAction action="#{viewProductManagedBean.init}" />
+        <f:attribute name="pageName" value="View Product" />
+    </f:metadata>
+    <h:head>
+        <!-- Required meta tags -->
+        <title>WriteWithStyles | Australian's No 1 for Writing Instruments</title>
+        <meta charset="utf-8"/>
+        <meta name="description" content="Web Descripiton" />
+        <meta name="keywords" content="Search Keyword" />
+        <meta name="author" content="Phan Huy Hoang Nguyen" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+        <!-- Bootstrap Css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+              crossorigin="anonymous"/>
+
+        <!-- Fontawsome Plugins -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" 
+              integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+              crossorigin="anonymous"/>
+
+        <!-- Custom Css -->
+        <link href="resources/css/myCss.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="resources/templates/commonHeaderFooter.xhtml">
+            <!-- this will be shown instead of the (default) “content” section in the “commonHeaderFooter.xhtml template -->
+            <ui:define name="pageContent">
+                <div id="body-container" class="container">
+                    <nav aria-label="breadcrumb" class="mt-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <h:form>
+                                    <h:link value = "Home" outcome = "index" /> 
+                                </h:form>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                #{viewProductManagedBean.product.displayName}
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <h:panelGroup class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <h:graphicImage class="img-responsive" alt="Product Image"
+                                            name="#{viewProductManagedBean.product.image}"/>
+                        </div>
+
+                        <div class="col-md-6 col-lg-6">
+                            <p class="h4">
+                                <strong>#{viewProductManagedBean.product.name}</strong>
+                            </p>
+                            <div class="row">
+                                <p class="col-md-12 col-lg-6">
+                                    Brand: <span class="font-italic">
+                                        #{viewProductManagedBean.product.brand}
+                                    </span>
+                                </p>
+                                <p class="col-md-12 col-lg-6">
+                                    AUD$#{viewProductManagedBean.product.price}
+                                </p>
+                            </div>
+                            <div class="row">
+                                <p class="col-md-12 col-lg-6">
+                                    Colour: #{viewProductManagedBean.product.colour}
+                                </p>
+                                <c:choose>
+                                    <c:when test="#{viewProductManagedBean.product.stockQuantity > 0}">
+                                        <div class="col-md-12 col-lg-6">
+                                            Instock: #{viewProductManagedBean.product.stockQuantity}
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col-md-12 col-lg-6">
+                                            This Item is currently out of stock
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <p>
+                                #{viewProductManagedBean.product.description}
+                            </p>
+                            <c:if test="#{viewProductManagedBean.product.stockQuantity > 0}">
+                                <h:form>
+                                    <h:panelGroup class="form-group">
+                                        <h:outputLabel class="sr-only" 
+                                                       value="Quantity"/>
+                                        <h:panelGroup>
+                                            <h:inputText id="orderedQuantityField" 
+                                                         value="#{viewProductManagedBean.orderedQuantity}"
+                                                         class="form-control"
+                                                         label="Quantity"
+                                                         pt:placeholder="Quantity"
+                                                         required="true"
+                                                         requiredMessage="Please enter value between 1 and #{viewProductManagedBean.product.stockQuantity}"
+                                                         converterMessage="Please enter digits only."
+                                                         validatorMessage="Please enter value between 1 and #{viewProductManagedBean.product.stockQuantity}">
+                                                <f:validateLongRange minimum="1" 
+                                                                     maximum="#{viewProductManagedBean.product.stockQuantity}" />
+                                            </h:inputText>
+                                            <h:message styleClass="invalid-tooltip d-block position-static" for="orderedQuantityField"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                    <h:commandButton action="#{viewProductManagedBean.submit}" 
+                                                     value ="ADD TO CART" 
+                                                     class="btn btn-primary btn-block mt-3 text-white" >
+                                        <f:ajax execute="@form" 
+                                                render="@form :shoppingCartNavBarPanelGroup :alertBox" />
+                                    </h:commandButton>
+                                </h:form>
+                                <h:panelGroup id="alertBox">
+                                    <h:panelGroup rendered="#{viewProductManagedBean.isSubmittedFormValid()}">
+                                        <div class="d-flex justify-content-end mt-4">
+                                            <div class="alert alert-success alert-dismissible fade show position-fixed" role="alert">
+                                                Cart is updated!
+                                                <button type="button" 
+                                                        class="close" aria-label="Close"
+                                                        data-dismiss="alert" >
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </c:if>
+                        </div>
+                    </h:panelGroup>
+
+                    <hr class="my-4"/>
+
+                    <p class="text-left my-4 h4">
+                        You might also like
+                    </p>
+
+                    <h:panelGroup class="row">
+                        <ui:repeat value="#{dynamicProductsDisplayForPageManagedBean.getProductsByCollectionSize(4, true)}" 
+                                   var="item">
+                            <h:link class="col-sm-6 col-md-3 image-hover" 
+                                    outcome = "viewProduct.xhtml">
+                                <h:graphicImage name="#{item.image}" 
+                                                class="img-responsive" 
+                                                alt="Product Image"/>
+                                <h:panelGroup class="row">
+                                    <span class="col-8">
+                                        #{item.displayName}
+                                    </span>
+                                    <span class="col-4 text-right">
+                                        #{item.price}
+                                    </span>
+                                </h:panelGroup>
+                                <f:param name="productId" value="#{item.id}" />
+                            </h:link> 
+                        </ui:repeat>
+                    </h:panelGroup>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+        <!-- Bootstrap: jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" 
+        crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+        crossorigin="anonymous"></script>
+        
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+        crossorigin="anonymous"></script>
+
+    </h:body>
+</html>

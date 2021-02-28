@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/InventoryFacade.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/ProductManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/ShoppingCartManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/RealmGroupFacade.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/RealmGroupFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/CustomerNotificationManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/UserGroupManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/UserGroupFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/CustomerOrderFacade.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/InventoryManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/UserFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/UserFacade.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/CustomerOrderProductManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/ProductFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/entities/UserGroupPK.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/CustomerOrderFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/UserManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/CustomerOrderManagement.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/ProductFacade.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/entities/CustomerOrder.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/InventoryFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/UserGroupFacade.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/utilities/HashHelper.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/interfaces/CustomerOrderProductFacadeLocal.java</file>
+            <file>file:/D:/NoWhiteSpaces/w9/WriteWithStyles/WriteWithStyles-ejb/src/java/sessions/CustomerOrderProductFacade.java</file>
+        </group>
+    </open-files>
+</project-private>
